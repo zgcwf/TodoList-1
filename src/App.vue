@@ -35,11 +35,12 @@ export default {
   data() {
     return {
       //由于todos是MyHeader组件和MyFooter组件都在使用，所以放在App中（状态提升）
-      todos: [
-        { id: "001", title: "抽烟", done: true },
-        { id: "002", title: "喝酒", done: false },
-        { id: "003", title: "开车", done: true },
-      ],
+      // todos: [
+      //   { id: "001", title: "抽烟", done: true },
+      //   { id: "002", title: "喝酒", done: false },
+      //   { id: "003", title: "开车", done: true },
+      // ],
+      todos: JSON.parse(localStorage.getItem("todos")) || [],
     };
   },
   methods: {
@@ -74,6 +75,15 @@ export default {
       this.todos = this.todos.filter((todo) => {
         return todo.done === false;
       });
+    },
+  },
+  watch: {
+    todos: {
+      deep: true,
+      // 开启深度监视
+      handler(value) {
+        localStorage.setItem("todos", JSON.stringify(value));
+      },
     },
   },
 };
