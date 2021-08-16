@@ -4,6 +4,7 @@
       <!-- <input type="checkbox" :checked="isAll" @change="checkAll" /> -->
       <!-- 可以简写为下方这句代码，isAll是自己计算出来的，不是props属性 -->
       <input type="checkbox" v-model="isAll" />
+      <!-- 没有配置input的value属性，那么v-model收集的就是checked（勾选 or 未勾选，是布尔值） -->
     </label>
     <span>
       <span>已完成{{ doneTotal }}</span> / 全部{{ total }}
@@ -32,11 +33,14 @@ export default {
     isAll: {
       //全选框是否勾选
       get() {
+        //get有什么作用？当有人读取isAll时，get就会被调用，且返回值就作为isAll的值
         return this.doneTotal === this.total && this.total > 0;
       },
       //isAll被修改时set被调用
       set(value) {
+        // 当isAll发生改变时，set调用，value值为isAll的值
         this.checkAllTodo(value);
+        // console.log(value);
       },
     },
   },

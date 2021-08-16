@@ -81,8 +81,10 @@ export default {
     todos: {
       deep: true,
       // 开启深度监视
+      // 当todos中的数据发生变化时，handler自动调用
       handler(value) {
         localStorage.setItem("todos", JSON.stringify(value));
+        // console.log("@", value);
       },
     },
   },

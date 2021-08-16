@@ -11,7 +11,7 @@
 
 <script>
 import { nanoid } from "nanoid";
-// 先npm i nanoid下载，再引入nanoid，生成随机id
+// 先npm i nanoid下载，再引入nanoid，生成随机id，是个函数。
 export default {
   name: "MyHeader",
   //   3.子组件接收父组件传递的函数
@@ -25,7 +25,9 @@ export default {
   methods: {
     add() {
       //校验数据
-      if (!this.title.trim()) return alert("输入不能为空");
+      if (!this.title.trim()) {
+        return alert("输入不能为空");
+      }
       //将用户的输入包装成一个todo对象
       const todoObj = { id: nanoid(), title: this.title, done: false };
       //4.调用这个函数，通知App组件去添加一个todo对象
