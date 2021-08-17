@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import pubsub from "pubsub-js";
 import MyHeader from "./components/MyHeader.vue";
 import MyFooter from "./components/MyFooter.vue";
 import MyList from "./components/MyList.vue";
@@ -72,7 +73,8 @@ export default {
       });
     },
     // 删除一个todo
-    deleteTodo(id) {
+    deleteTodo(_, id) {
+      // 加一个_占位，因为pubsub.subscribe接收两个参数，第一个参数为事件名，第二个才是传入的参数
       this.todos = this.todos.filter((todo) => {
         // 过滤出todo.id不等于id的属性返回
         return todo.id !== id;
@@ -90,6 +92,12 @@ export default {
         return todo.done === false;
       });
     },
+    //更新一个todo
+    updateTodo(id, title) {
+      this.todos.forEach((todo) => {
+        if (todo.id === id) todo.title = title;
+      });
+    },
   },
   watch: {
     todos: {
@@ -102,14 +110,22 @@ export default {
       },
     },
   },
-  // 4.全局事件总线接收数据并回调函数
+
   mounted() {
+    // 4.全局事件总线接收数据并回调函数
     this.$bus.$on("checkTodo", this.checkTodo);
-    this.$bus.$on("deleteTodo", this.deleteTodo);
+    // 发布订阅消息（几乎与全局事件用法总线一致）
+    this.pubId = pubsub.subscribe("deleteTodo", this.deleteTodo);
+    // 编辑
+    this.$bus.$on("updateTodo", this.updateTodo);
   },
   beforeDestroy() {
+    // 解绑当前组件所用到的事件。
     this.$bus$off("checkTodo");
-    this.$bus$off("deleteTodo");
+    // 取消当前订阅事件
+    pubsub.unsubscribe(this.pubId);
+    // 解绑当前组件所用到的事件。
+    this.$bus.$off("updateTodo");
   },
 };
 </script>
@@ -139,7 +155,12 @@ body {
   background-color: #da4f49;
   border: 1px solid #bd362f;
 }
-
+.btn-edit {
+  color: #fff;
+  background-color: skyblue;
+  border: 1px solid rgb(103, 159, 180);
+  margin-right: 5px;
+}
 .btn-danger:hover {
   color: #fff;
   background-color: #bd362f;
