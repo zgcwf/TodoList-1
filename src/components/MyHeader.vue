@@ -26,8 +26,11 @@ export default {
     add() {
       //校验数据
       if (!this.title.trim()) {
+        // 如果this.title为空，取反，if判断语句中!this.title为非空，true。执行return语句，弹出add（）函数
+        // 如果this.title为非空，取反，if判断语句中!this.title为空，false。跳过return语句，执行下方语句
         return alert("输入不能为空");
       }
+      // 不写else则执行完if语句之后依次执行下方语句
       //将用户的输入包装成一个todo对象
       const todoObj = { id: nanoid(), title: this.title, done: false };
       //4.调用这个函数，通知App组件去添加一个todo对象

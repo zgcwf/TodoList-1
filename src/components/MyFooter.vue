@@ -38,7 +38,7 @@ export default {
       },
       //isAll被修改时set被调用
       set(value) {
-        // 当isAll发生改变时，set调用，value值为isAll的值
+        // 当isAll发生改变时，set调用，value值为isAll的值。因为v-model，isAll只有true或者false
         this.checkAllTodo(value);
         // console.log(value);
       },
