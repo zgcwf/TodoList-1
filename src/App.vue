@@ -5,13 +5,16 @@
         <!-- 2.props：将父组件函数传递给子组件 
         <MyHeader :addTodo="addTodo"></MyHeader>
         -->
+        <!-- 使用自定义事件 -->
         <MyHeader @addTodo="addTodo"></MyHeader>
 
-        <MyList
+        <!-- 2.props：将父组件函数传递给子组件 
+          <MyList
           :todos="todos"
           :checkTodo="checkTodo"
           :deleteTodo="deleteTodo"
-        ></MyList>
+        ></MyList> -->
+        <MyList :todos="todos"> </MyList>
 
         <!--  2.props：将父组件函数传递给子组件 
           <MyFooter
@@ -19,6 +22,7 @@
           :checkAllTodo="checkAllTodo"
           :clearAllTodo="clearAllTodo"
         ></MyFooter> -->
+        <!-- 使用自定义事件 -->
         <MyFooter
           :todos="todos"
           @checkAllTodo="checkAllTodo"
@@ -57,7 +61,7 @@ export default {
     //添加一个todo
     addTodo(todoObj) {
       this.todos.unshift(todoObj);
-      //  1.父组件定义函数,无论是自定义事件还是props，子传父这都是第一步
+      //  1.父组件定义函数,无论是自定义事件还是props，还是全局事件总线子传父这都是第一步
     },
     //勾选or取消勾选一个todo
     checkTodo(id) {
@@ -97,6 +101,15 @@ export default {
         // console.log("@", value);
       },
     },
+  },
+  // 4.全局事件总线接收数据并回调函数
+  mounted() {
+    this.$bus.$on("checkTodo", this.checkTodo);
+    this.$bus.$on("deleteTodo", this.deleteTodo);
+  },
+  beforeDestroy() {
+    this.$bus$off("checkTodo");
+    this.$bus$off("deleteTodo");
   },
 };
 </script>

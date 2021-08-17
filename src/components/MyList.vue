@@ -1,13 +1,15 @@
 <template>
   <ul class="todo-main">
-    <MyItem
+    <!-- <MyItem
       v-for="todoObj of todos"
       :key="todoObj.id"
       :todo="todoObj"
       :checkTodo="checkTodo"
       :deleteTodo="deleteTodo"
-    />
+    /> -->
     <!-- 将接收的父组件函数传递给子组件 -->
+
+    <MyItem v-for="todoObj of todos" :key="todoObj.id" :todo="todoObj" />
   </ul>
 </template>
 
@@ -16,7 +18,8 @@ import MyItem from "./MyItem.vue";
 export default {
   name: "MyList",
   components: { MyItem },
-  props: ["todos", "checkTodo", "deleteTodo"],
+  // props: ["todos", "checkTodo", "deleteTodo"],
+  props: ["todos"],
 };
 </script>
 
