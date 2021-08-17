@@ -60,6 +60,7 @@ export default {
         /*3.全局事件总线传递数据
          this.$bus.$emit("deleteTodo", id);
           */
+        //发布消息
         pubsub.publish("deleteTodo", id);
       }
     },
@@ -72,6 +73,7 @@ export default {
       }
       // 在下一次 DOM 更新结束后执行其指定的回调。
       this.$nextTick(function () {
+        // 自动获取焦点
         this.$refs.inputTitle.focus();
       });
       // setTimeout(() => {

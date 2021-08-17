@@ -114,7 +114,7 @@ export default {
   mounted() {
     // 4.全局事件总线接收数据并回调函数
     this.$bus.$on("checkTodo", this.checkTodo);
-    // 发布订阅消息（几乎与全局事件用法总线一致）
+    // 订阅消息（几乎与全局事件用法总线一致）
     this.pubId = pubsub.subscribe("deleteTodo", this.deleteTodo);
     // 编辑
     this.$bus.$on("updateTodo", this.updateTodo);
