@@ -16,7 +16,10 @@
 <script>
 export default {
   name: "MyFooter",
-  props: ["todos", "checkAllTodo", "clearAllTodo"],
+  /*3.props：子组件接收父组件传递的函数
+   props: ["todos", "checkAllTodo", "clearAllTodo"],
+   */
+  props: ["todos"],
 
   computed: {
     total() {
@@ -39,8 +42,11 @@ export default {
       //isAll被修改时set被调用
       set(value) {
         // 当isAll发生改变时，set调用，value值为isAll的值。因为v-model，isAll只有true或者false
+        /* 4.props：调用这个函数全选
         this.checkAllTodo(value);
-        // console.log(value);
+        */
+        console.log(value);
+        this.$emit("checkAllTodo", value);
       },
     },
   },
@@ -54,7 +60,10 @@ export default {
     */
     //清空所有已完成
     clearAll() {
+      /*4.props：调用这个函数清除已完成
       this.clearAllTodo();
+      */
+      this.$emit("clearAllTodo");
     },
   },
 };

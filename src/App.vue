@@ -2,17 +2,27 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        <!-- 2.将父组件函数传递给子组件 -->
+        <!-- 2.props：将父组件函数传递给子组件 
         <MyHeader :addTodo="addTodo"></MyHeader>
+        -->
+        <MyHeader @addTodo="addTodo"></MyHeader>
+
         <MyList
           :todos="todos"
           :checkTodo="checkTodo"
           :deleteTodo="deleteTodo"
         ></MyList>
-        <MyFooter
+
+        <!--  2.props：将父组件函数传递给子组件 
+          <MyFooter
           :todos="todos"
           :checkAllTodo="checkAllTodo"
           :clearAllTodo="clearAllTodo"
+        ></MyFooter> -->
+        <MyFooter
+          :todos="todos"
+          @checkAllTodo="checkAllTodo"
+          @clearAllTodo="clearAllTodo"
         ></MyFooter>
       </div>
     </div>
@@ -47,7 +57,7 @@ export default {
     //添加一个todo
     addTodo(todoObj) {
       this.todos.unshift(todoObj);
-      //  1.父组件定义函数
+      //  1.父组件定义函数,无论是自定义事件还是props，子传父这都是第一步
     },
     //勾选or取消勾选一个todo
     checkTodo(id) {
