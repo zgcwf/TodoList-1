@@ -26,12 +26,12 @@ export default {
       return this.todos.length;
     },
     doneTotal() {
-      let i = 0;
-      this.todos.forEach((p) => {
-        if (p.done) i++;
-      });
-      return i;
-      //   return this.todos.reduce((pre, todo) => pre + (todo.done ? 1 : 0), 0);
+      // let i = 0;
+      // this.todos.forEach((p) => {
+      //   if (p.done) i++;
+      // });
+      // return i;
+        return this.todos.reduce((pre, todo) => pre + (todo.done ? 1 : 0), 0);
     },
     isAll: {
       //全选框是否勾选

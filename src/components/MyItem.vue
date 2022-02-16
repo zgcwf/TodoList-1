@@ -9,11 +9,19 @@
       <!-- 如下代码也能实现功能，甚至不用添加函数事件，但是不太推荐，因为有点违反原则，因为修改了props -->
       <!-- <input type="checkbox" v-model="todo.done"/> -->
       <span v-show="!todo.isEdit">{{ todo.title }}</span>
-      <input
+      <!-- 两种方式得到input框的值-- e.target.value  v-model -->
+      <!-- <input
         type="text"
         :value="todo.title"
         v-show="todo.isEdit"
         @blur="handleBlur(todo, $event)"
+        ref="inputTitle"
+      /> -->
+       <input
+        type="text"
+        v-model = "title"
+        v-show="todo.isEdit"
+        @blur="handleBlur(todo, title)"
         ref="inputTitle"
       />
     </label>
@@ -35,6 +43,11 @@ export default {
   /*3.props：子组件接收父组件传递的函数
    props: ["todo", "checkTodo", "deleteTodo"],
    */
+  data(){
+    return{
+      title:''
+    }
+  },
   props: ["todo"],
 
   methods: {
@@ -71,6 +84,8 @@ export default {
       } else {
         this.$set(todo, "isEdit", true);
       }
+      // v-model时让其获取初始值
+      this.title = todo.title
       // 在下一次 DOM 更新结束后执行其指定的回调。
       this.$nextTick(function () {
         // 自动获取焦点
@@ -81,12 +96,18 @@ export default {
       // });
     },
     //失去焦点回调（真正执行修改逻辑）
-    handleBlur(todo, e) {
+    // handleBlur(todo, e) {
+    //   todo.isEdit = false;
+    //   if (!e.target.value.trim()) {
+    //     return alert("输入不能为空");
+    //   }
+    //   this.$bus.$emit("updateTodo", todo.id, e.target.value);
+    // },
+
+     handleBlur(todo, title) {
       todo.isEdit = false;
-      if (!e.target.value.trim()) {
-        return alert("输入不能为空");
-      }
-      this.$bus.$emit("updateTodo", todo.id, e.target.value);
+      
+      this.$bus.$emit("updateTodo", todo.id, title);
     },
   },
 };
